@@ -38,7 +38,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Robert E. Long (rlong @ unicon.net)
  *
  */
-@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
 public class StatementTest {

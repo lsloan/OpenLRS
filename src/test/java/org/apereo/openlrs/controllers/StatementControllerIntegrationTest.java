@@ -49,7 +49,6 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes=Application.class)
-@ActiveProfiles("test")
 public class StatementControllerIntegrationTest {
 	MockMvc mockMvc;
 	
@@ -81,7 +80,7 @@ public class StatementControllerIntegrationTest {
 	
 	@Test
 	public void thatStatementGetWithNoVersionHeaderReturns400() throws Exception {
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 			get("/xAPI/statements")
@@ -96,7 +95,7 @@ public class StatementControllerIntegrationTest {
 		this.mockMvc.perform(
 				get("/xAPI/statements")
 					.header("Authorization", "OAuth")
-					.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+					.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 					.accept(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isUnauthorized());
@@ -108,7 +107,7 @@ public class StatementControllerIntegrationTest {
 		this.mockMvc.perform(
 				get("/xAPI/statements")
 					.header("Authorization", oauth)
-					.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+					.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 					.accept(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isOk());
@@ -116,12 +115,12 @@ public class StatementControllerIntegrationTest {
 	
 	@Test
 	public void thatStatementGetWithBasicReturns200() throws Exception {
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 				get("/xAPI/statements")
 					.header("Authorization", "Basic " + new String(encodedBytes))
-					.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+					.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 					.accept(MediaType.APPLICATION_JSON))
 					.andDo(print())
 					.andExpect(status().isOk());
@@ -129,16 +128,16 @@ public class StatementControllerIntegrationTest {
 	
 	@Test
 	public void thatStatementReturnsHeaderWithVersion() throws Exception {
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 			get("/xAPI/statements")
 				.header("Authorization", "Basic " + new String(encodedBytes))
-				.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+				.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(header().string("X-Experience-API-Version", "someversion"));
+				.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 	
 	@Test
@@ -153,17 +152,17 @@ public class StatementControllerIntegrationTest {
 							"verb, or the Activity/object.\" }}}}";	
 		
 		
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 			post("/xAPI/statements")
 				.header("Authorization", "Basic " + new String(encodedBytes))
-				.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+				.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(body))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(header().string("X-Experience-API-Version", "someversion"));
+				.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 	
 	@Test
@@ -178,17 +177,17 @@ public class StatementControllerIntegrationTest {
 				"verb, or the Activity/object.\" }}}}";	
 
 
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 	
 	@Test
@@ -199,17 +198,17 @@ public class StatementControllerIntegrationTest {
 						"\"id\":\"http://example.adlnet.gov/xapi/example/simpleCBT\",\"definition\":{\"name\":{\"en-US\":\"simple CBT course\""+
             			"},\"description\":{\"en-US\":\"A fictitious example CBT course.\"}}},\"result\":{\"score\":{\"scaled\":0.95},\"success\":true,\"completion\":true}}";
 		
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 	
 	@Test
@@ -235,17 +234,17 @@ public class StatementControllerIntegrationTest {
             			"\"en-US\": \"An example meeting that happened on a specific occasion with certain people present.\"},\"type\": \"http://adlnet.gov/expapi/activities/meeting\","+
             			"\"moreInfo\": \"http://virtualmeeting.example.com/345256\"},\"objectType\": \"Activity\"}}";
 		
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 
 	}
 	
@@ -259,17 +258,17 @@ public class StatementControllerIntegrationTest {
 				"verb, or the Activity/object.\" }}}}";	
 
 
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 
 	@Test
@@ -281,17 +280,17 @@ public class StatementControllerIntegrationTest {
 				"\"description\":{ \"en-US\":\"A simple Experience API statement. Note that the LRS does not need to have any prior information about the Actor (learner), the "+
 				"verb, or the Activity/object.\" }}}}";	
 
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 	
 	@Test
@@ -301,16 +300,16 @@ public class StatementControllerIntegrationTest {
 				"\"verb\":{\"id\":\"http://adlnet.gov/expapi/verbs/created\","+
 				"\"display\":{\"en-US\":\"created\" }}}";	
 
-		String basic = "test:test";
+		String basic = "openlrs:openlrs";
 		final byte[] encodedBytes = Base64.encodeBase64(basic.getBytes());
 		this.mockMvc.perform(
 		post("/xAPI/statements")
 			.header("Authorization", "Basic " + new String(encodedBytes))
-			.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+			.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(body))
 			.andDo(print())
 			.andExpect(status().isBadRequest())
-			.andExpect(header().string("X-Experience-API-Version", "someversion"));
+			.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 }

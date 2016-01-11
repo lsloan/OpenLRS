@@ -30,7 +30,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author ggilbert
  *
  */
-@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
 public class AboutControllerTest {
@@ -40,6 +39,6 @@ public class AboutControllerTest {
 	@Test
 	public void versionShouldBe() {
 		About about = aboutController.about();
-		Assert.assertEquals("someversion", about.getVersion());
+		Assert.assertEquals("1.0.1", about.getVersion());
 	}
 }

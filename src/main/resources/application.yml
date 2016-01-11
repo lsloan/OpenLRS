@@ -4,6 +4,12 @@
 
 endpoints:
   enabled: false
+  env:
+    enabled: false
+  pause:
+    enabled: false
+  resume:
+    enabled: false
   info:
     enabled: true
     

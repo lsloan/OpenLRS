@@ -42,7 +42,6 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author ggilbert (ggilbert @ unicon.net)
  *
  */
-@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
 public class AboutControllerIntegrationTest {
@@ -73,7 +72,7 @@ public class AboutControllerIntegrationTest {
 	public void thatAboutReturnsJsonWithVersion() throws Exception {
 		this.mockMvc.perform(
 			get("/xAPI/about")
-				.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+				.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -84,10 +83,10 @@ public class AboutControllerIntegrationTest {
 	public void thatAboutReturnsHeaderWithVersion() throws Exception {
 		this.mockMvc.perform(
 				get("/xAPI/about")
-				.header(XApiConstants.XAPI_VERSION_HEADER, "someversion")
+				.header(XApiConstants.XAPI_VERSION_HEADER, "1.0.1")
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(header().string("X-Experience-API-Version", "someversion"));
+				.andExpect(header().string("X-Experience-API-Version", "1.0.1"));
 	}
 }
