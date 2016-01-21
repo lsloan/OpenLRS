@@ -27,6 +27,7 @@ import org.apereo.openlrs.model.event.EventConversionService;
 import org.apereo.openlrs.repositories.event.ElasticsearchEventRepository;
 import org.apereo.openlrs.storage.TierTwoStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,8 +37,8 @@ import org.springframework.stereotype.Component;
  * @author ggilbert
  *
  */
+@ConditionalOnProperty(name="openlrs.tierTwoStorage", havingValue="NormalizedElasticsearchTierTwoStorage")
 @Component("NormalizedElasticsearchTierTwoStorage")
-@Profile("elasticsearch")
 public class NormalizedElasticsearchTierTwoStorage implements TierTwoStorage<OpenLRSEntity> {
 	
 	@Autowired private ElasticsearchEventRepository elasticsearchEventRepository;

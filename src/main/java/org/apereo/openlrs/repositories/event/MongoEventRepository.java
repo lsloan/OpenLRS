@@ -16,18 +16,20 @@
 package org.apereo.openlrs.repositories.event;
 
 import org.apereo.openlrs.model.event.Event;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author ggilbert
  *
  */
-@Repository
-@Profile("mongo")
+@ConditionalOnProperty(name="openlrs.tierTwoStorage", havingValue="NormalizedMongoTierTwoStorage")
+@Component
 public interface MongoEventRepository extends MongoRepository<Event, String> {
 	Event findBySourceId(String sourceId);
 	Page<Event> findByActor(String actor, Pageable pageable);

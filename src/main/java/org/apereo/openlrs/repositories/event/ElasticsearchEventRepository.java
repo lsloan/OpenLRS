@@ -17,18 +17,20 @@ package org.apereo.openlrs.repositories.event;
 
 import org.apereo.openlrs.model.event.Event;
 import org.apereo.openlrs.model.xapi.StatementMetadata;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author ggilbert
  *
  */
-@Repository
-@Profile("elasticsearch")
+@ConditionalOnProperty(name="openlrs.tierTwoStorage", havingValue="NormalizedElasticsearchTierTwoStorage")
+@Component
 public interface ElasticsearchEventRepository extends ElasticsearchRepository<Event,String> {
 	Event findBySourceId(String sourceId);
 	Page<Event> findByActor(String actor, Pageable pageable);

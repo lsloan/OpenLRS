@@ -45,7 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author ggilbert
  *
  */
-
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes=Application.class)

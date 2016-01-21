@@ -19,3 +19,25 @@ info:
     name: ${project.name}
     description: ${project.description}
     version: ${project.version}
+    
+openlrs:
+  # options - InMemoryStorage, RedisPubSubTierOneStorage
+  tierOneStorage: InMemoryStorage
+  # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage
+  tierTwoStorage: InMemoryStorage
+
+#spring:
+  # Redis
+  # uncomment this line if you are using password protected redis
+  #redis:
+    #password: somepassword
+    # uncomment these lines if you are using redis sentinel for HA
+    #sentinel:
+      #master: openlrsmaster
+      #nodes: 127.0.0.1:26379,127.0.0.1:26380,127.0.0.1:26381
+  # For Elasticsearch or Mongo
+  #data:
+    #elasticsearch:
+      #cluster-nodes: localhost:9300
+
+  

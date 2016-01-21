@@ -18,18 +18,20 @@ package org.apereo.openlrs.repositories.statements;
 import java.util.Collection;
 
 import org.apereo.openlrs.model.xapi.Statement;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author ggilbert
  *
  */
-@Repository
-@Profile("elasticsearch")
+@ConditionalOnProperty(name="openlrs.tierTwoStorage", havingValue="XApiOnlyElasticsearchTierTwoStorage")
+@Component
 public interface ElasticSearchStatementSpringDataRepository extends
 		ElasticsearchRepository<Statement, String> {
 	Page<Statement> findByIdInOrderByTimestampDesc(Collection<String> ids, Pageable pageable);

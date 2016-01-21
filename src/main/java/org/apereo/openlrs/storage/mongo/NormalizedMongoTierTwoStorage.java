@@ -28,6 +28,7 @@ import org.apereo.openlrs.storage.TierTwoStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,8 +38,8 @@ import org.springframework.stereotype.Component;
  * @author ggilbert
  * @author Lance E Sloan (lsloan at umich dot edu)
  */
+@ConditionalOnProperty(name="openlrs.tierTwoStorage", havingValue="NormalizedMongoTierTwoStorage")
 @Component("NormalizedMongoTierTwoStorage")
-@Profile("mongo")
 public class NormalizedMongoTierTwoStorage implements TierTwoStorage<OpenLRSEntity> {
     private Logger log = LoggerFactory.getLogger(NormalizedMongoTierTwoStorage.class);
 

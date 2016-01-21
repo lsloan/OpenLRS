@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.apereo.openlrs.model.OpenLRSEntity;
 import org.apereo.openlrs.storage.TierOneStorage;
 import org.apereo.openlrs.storage.TierTwoStorage;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Component;
  * @author ggilbert
  *
  */
+@ConditionalOnProperty(name="openlrs.tierOneStorage", havingValue="InMemoryStorage")
 @Component("InMemoryStorage")
 public class InMemoryStorage implements TierOneStorage<OpenLRSEntity>, TierTwoStorage<OpenLRSEntity> {
 	private Logger log = Logger.getLogger(InMemoryStorage.class);

@@ -22,6 +22,7 @@ import java.util.List;
 import org.apereo.openlrs.model.OpenLRSEntity;
 import org.apereo.openlrs.storage.TierOneStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -30,8 +31,8 @@ import org.springframework.stereotype.Component;
  * @author ggilbert
  *
  */
+@ConditionalOnProperty(name="openlrs.tierOneStorage", havingValue="RedisPubSubTierOneStorage")
 @Component("RedisPubSubTierOneStorage")
-@Profile("redis")
 public class RedisPubSubTierOneStorage implements TierOneStorage<OpenLRSEntity> {
 	
 	@Autowired private String channelName;	

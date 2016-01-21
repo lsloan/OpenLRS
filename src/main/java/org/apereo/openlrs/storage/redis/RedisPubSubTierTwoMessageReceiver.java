@@ -18,6 +18,7 @@ package org.apereo.openlrs.storage.redis;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apereo.openlrs.exceptions.InvalidEventFormatException;
 import org.apereo.openlrs.model.OpenLRSEntity;
 import org.apereo.openlrs.model.caliper.CaliperEvent;
@@ -28,6 +29,7 @@ import org.imsglobal.caliper.databind.JsonObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +37,8 @@ import org.springframework.stereotype.Component;
  * @author ggilbert
  * @author Lance E Sloan (lsloan at umich dot edu)
  */
+@ConditionalOnProperty(name="openlrs.tierOneStorage", havingValue="RedisPubSubTierOneStorage")
 @Component
-@Profile("redis")
 public class RedisPubSubTierTwoMessageReceiver {
 
     private Logger log = LoggerFactory.getLogger(RedisPubSubTierTwoMessageReceiver.class);
