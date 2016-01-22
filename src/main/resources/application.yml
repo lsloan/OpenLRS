@@ -23,7 +23,8 @@ info:
 openlrs:
   # options - InMemoryStorage, RedisPubSubTierOneStorage
   tierOneStorage: InMemoryStorage
-  # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage
+  # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, 
+  # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage
   tierTwoStorage: InMemoryStorage
 
 #spring:
@@ -39,5 +40,10 @@ openlrs:
   #data:
     #elasticsearch:
       #cluster-nodes: localhost:9300
+      
+# AWS Elasticsearch
+#aws:
+  #es:
+    #connectionUrl: https://something.es.amazonaws.com/
 
   
