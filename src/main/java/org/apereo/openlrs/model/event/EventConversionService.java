@@ -15,15 +15,12 @@
  */
 package org.apereo.openlrs.model.event;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.openlrs.exceptions.xapi.InvalidXApiFormatException;
 import org.apereo.openlrs.model.OpenLRSEntity;
@@ -36,12 +33,6 @@ import org.apereo.openlrs.model.xapi.XApiContextActivities;
 import org.apereo.openlrs.model.xapi.XApiObject;
 import org.apereo.openlrs.model.xapi.XApiObjectDefinition;
 import org.apereo.openlrs.model.xapi.XApiVerb;
-import org.imsglobal.caliper.entities.agent.SoftwareApplication;
-import org.imsglobal.caliper.entities.lis.Group;
-import org.imsglobal.caliper.entities.session.Session;
-import org.imsglobal.caliper.entities.w3c.Organization;
-import org.imsglobal.caliper.events.BaseEventContext;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +40,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**

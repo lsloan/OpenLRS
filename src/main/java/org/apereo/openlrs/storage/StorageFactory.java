@@ -18,9 +18,10 @@ package org.apereo.openlrs.storage;
 import java.util.Map;
 
 import org.apereo.openlrs.model.OpenLRSEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StorageFactory {
 
+  private Logger log = LoggerFactory.getLogger(StorageFactory.class);
+  
 	@Value("${openlrs.tierOneStorage:InMemoryStorage}")
 	private String tierOneStorage;
 	@Autowired private Map<String, TierOneStorage<OpenLRSEntity>> tierOneStorageOptions;
@@ -47,6 +50,8 @@ public class StorageFactory {
 	}
 	
 	public TierTwoStorage<OpenLRSEntity> getTierTwoStorage() {
+	  log.debug(tierTwoStorage);
+	  log.debug("{}",tierTwoStorageOptions);
 		return tierTwoStorageOptions.get(tierTwoStorage);
 	}
 	

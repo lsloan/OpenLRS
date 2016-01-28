@@ -21,10 +21,10 @@ info:
     version: ${project.version}
     
 openlrs:
-  # options - InMemoryStorage, RedisPubSubTierOneStorage
+  # options - InMemoryStorage, RedisPubSubTierOneStorage, AwsKinesisTierOneStorage
   tierOneStorage: InMemoryStorage
   # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, 
-  # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage
+  # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage, NormalizedAwsElasticsearchTierTwoStorage
   tierTwoStorage: InMemoryStorage
 
 #spring:
@@ -41,9 +41,15 @@ openlrs:
     #elasticsearch:
       #cluster-nodes: localhost:9300
       
-# AWS Elasticsearch
-#aws:
+# AWS
+aws:
+  # AWS Elasticsearch service
   #es:
-    #connectionUrl: https://something.es.amazonaws.com/
+    #connectionUrl: https://search-something.us-east-1.es.amazonaws.com/
+  # AWS Kinesis
+  #kinesis:
+    #endpoint: kinesis.us-east-1.amazonaws.com
+    #stream: something
+    
 
   
