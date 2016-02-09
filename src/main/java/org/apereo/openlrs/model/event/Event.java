@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author ggilbert
  *
  */
+@Deprecated
 @Document(indexName="event")
 @JsonInclude(Include.NON_NULL)
 public class Event implements OpenLRSEntity {

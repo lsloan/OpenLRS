@@ -27,6 +27,8 @@ import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,6 +38,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 /**
  * @author ggilbert
@@ -43,7 +46,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 @Configuration
-@EnableAutoConfiguration(exclude = {ElasticsearchAutoConfiguration.class,ElasticsearchDataAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {ElasticsearchAutoConfiguration.class,
+    ElasticsearchDataAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class,
+    DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages={"org.apereo.openlrs","lti"})
 public class Application {
 	
@@ -59,12 +65,13 @@ public class Application {
 	}
 	
 	@Bean
-    @Primary
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-        return mapper;
-    }
+  @Primary
+  public ObjectMapper objectMapper() {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JodaModule());
+    mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+    return mapper;
+  }
 	
 	@Bean
 	public javax.validation.Validator localValidatorFactoryBean() {
