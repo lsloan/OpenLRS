@@ -26,6 +26,8 @@ openlrs:
   # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, 
   # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage, NormalizedAwsElasticsearchTierTwoStorage
   tierTwoStorage: InMemoryStorage
+  # options - PropertiesFileKeyManager,DatabaseKeyManager
+  keyManager: PropertiesFileKeyManager
 
 #spring:
   # Redis
@@ -40,7 +42,17 @@ openlrs:
   #data:
     #elasticsearch:
       #cluster-nodes: localhost:9300
-      
+  # For DatabaseKeyManager
+  #datasource:
+    #url: 
+    #username: root
+    #password: uni.dev
+    #driver-class-name: com.mysql.jdbc.Driver
+  #jpa:
+    #hibernate:
+      #ddl-auto: update
+  
+  
 # AWS
 aws:
   # AWS Elasticsearch service

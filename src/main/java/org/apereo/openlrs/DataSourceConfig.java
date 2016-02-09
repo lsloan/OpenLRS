@@ -13,13 +13,19 @@
  * permissions and limitations under the License.
  *
  */
-package org.apereo.openlrs.model.event;
+package org.apereo.openlrs;
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author ggilbert
  *
  */
-@Deprecated
-public enum EventFormatType {
- XAPI, CALIPER
+@ConditionalOnProperty("spring.datasource.url")
+@Configuration
+@EnableAutoConfiguration
+public class DataSourceConfig {
+
 }
