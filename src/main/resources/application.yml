@@ -27,7 +27,16 @@ openlrs:
   # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage, NormalizedAwsElasticsearchTierTwoStorage
   tierTwoStorage: InMemoryStorage
   # options - PropertiesFileKeyManager,DatabaseKeyManager
-  keyManager: PropertiesFileKeyManager
+  keyManager: DatabaseKeyManager
+  
+  
+# values that MUST be set if openlrs.keyManager is set to: DatabaseKeyManager
+# currently used by the pre-loader class to pre-populate db 
+databasekeymanager:
+  tenents:  
+  # ID|Name|Consumerkey|Secret
+    - 1|oauthkey1|key1|secret1
+    - 2|oauthkey2|key2|secret2
 
 #spring:
   # Redis
