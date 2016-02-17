@@ -17,7 +17,9 @@ package org.apereo.openlrs;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * @author ggilbert
@@ -26,6 +28,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty("spring.datasource.url")
 @Configuration
 @EnableAutoConfiguration
+@EnableJpaRepositories(basePackages = {"org.apereo.openlrs"})
+@EntityScan(basePackages = {"org.apereo.openlrs"})
 public class DataSourceConfig {
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.apereo.openlrs;
 
 import org.apereo.openlrs.exceptions.NotFoundException;
@@ -10,13 +7,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author ggilbert
+ * @author scody
  *
  */
 @ConditionalOnProperty(name="openlrs.keyManager", havingValue="DatabaseKeyManager")
 @Component
 public class DatabaseKeyManager implements KeyManager {
   
-  @Autowired private TenantRepository tenantRepository;
+  @Autowired
+  private TenantRepository tenantRepository;
 
   @Override
   public String getSecretForKey(String key) throws NotFoundException {
@@ -25,9 +24,11 @@ public class DatabaseKeyManager implements KeyManager {
     if (tenant == null) {
       throw new NotFoundException(String.format("No tenant found for key: s%", key));
     }
-    
+        
     return tenant.getSecret();
   }
+  
+  
 
   @Override
   public Tenant getTenantForKey(String key) throws NotFoundException {

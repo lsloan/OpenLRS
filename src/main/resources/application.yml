@@ -38,7 +38,7 @@ databasekeymanager:
     - 1|oauthkey1|key1|secret1
     - 2|oauthkey2|key2|secret2
 
-#spring:
+spring:
   # Redis
   # uncomment this line if you are using password protected redis
   #redis:
@@ -52,14 +52,14 @@ databasekeymanager:
     #elasticsearch:
       #cluster-nodes: localhost:9300
   # For DatabaseKeyManager
-  #datasource:
-    #url: 
-    #username: root
-    #password: uni.dev
-    #driver-class-name: com.mysql.jdbc.Driver
-  #jpa:
-    #hibernate:
-      #ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/openlrs
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
   
   
 # AWS
@@ -72,5 +72,8 @@ aws:
     #endpoint: kinesis.us-east-1.amazonaws.com
     #stream: something
     
+    
+hbm2ddl:
+  auto: create 
 
   

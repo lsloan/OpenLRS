@@ -15,10 +15,8 @@
  */
 package org.apereo.openlrs.controllers;
 
-import java.util.List;
 
 import org.apereo.openlrs.model.OpenLRSEntity;
-import org.apereo.openlrs.model.xapi.Statement;
 import org.apereo.openlrs.services.NormalizedEventService;
 import org.apereo.openlrs.services.xapi.XApiService;
 import org.springframework.beans.factory.annotation.Autowired;

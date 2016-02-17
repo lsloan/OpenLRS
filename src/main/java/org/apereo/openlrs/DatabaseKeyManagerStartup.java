@@ -3,12 +3,11 @@
  */
 package org.apereo.openlrs;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -22,16 +21,21 @@ public class DatabaseKeyManagerStartup {
   
   @Autowired private TenantRepository tenantRepository;
   
-  @Value("${databasekeymanager.tenents}")
-  private List<String> tenents;
-
   @PostConstruct
   public void initIt() throws Exception {
 	  
-	  //Tenant t = new Tenant();
+	  Tenant baseTenant = new Tenant();
 	  
-	  //tenantRepository.save(t);
-	  System.out.println("Init method after properties are set");
+	  baseTenant.setName("openlrs");	  
+	  baseTenant.setConsumerKey("openlrs");
+	  baseTenant.setSecret("openlrs");
+	  
+	  baseTenant.setCreated(new Date());
+	  baseTenant.setUpdated(new Date());
+	  baseTenant.setActive(true);
+	  baseTenant.setId(1);
+	  
+	  tenantRepository.save(baseTenant);	  
   }
 
 }
