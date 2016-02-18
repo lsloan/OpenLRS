@@ -53,6 +53,7 @@ public class PropertiesFileKeyManager implements KeyManager {
     tenant.setActive(true);
     tenant.setConsumerKey(key);
     tenant.setSecret(getSecretForKey(key));
+    tenant.setName(key);
     tenant.setId(0);
     
     return tenant;

@@ -37,15 +37,11 @@ import org.apereo.openlrs.utils.StatementUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -66,9 +62,7 @@ public class StatementController {
 	
   @Autowired KeyManager keyManager;
 	  
-  @Value("${openlrs.keyManager}")
-  String keyManagerType; 
-  
+
 
   private final Logger logger = LoggerFactory
       .getLogger(StatementController.class);
@@ -153,21 +147,18 @@ public class StatementController {
   public List<String> postStatement(@RequestBody String json, @RequestHeader(value="Authorization") String authorizationHeader)
       throws InvalidXAPIRequestException {
 	  
-	//sample  
-  	if("DatabaseKeyManager".equals(keyManagerType)) {
+	
 		
-    	//In the event that keyManagerType is a DatabaseKeyManager,
-		//assume that we need to persist the tenent key along with the record
-	    String key = AuthorizationUtils.getKeyFromHeader(authorizationHeader);
-	    Tenant tenant = keyManager.getTenantForKey(key);
-	    
-	    logger.debug("Tenant from auth: " + tenant.getName());
-	     	    
-	    //TODO persist tenant.getName() with the record
-  	}
-	  
+	
+    String key = AuthorizationUtils.getKeyFromHeader(authorizationHeader);
+    Tenant tenant = keyManager.getTenantForKey(key);
 
-	  
+    if(logger.isDebugEnabled()) {
+    	logger.debug("Tenant from auth: " + tenant.getName());
+    }
+     	    
+    //TODO persist tenant.getName() with the record
+
     List<String> ids = null;
     try {
       if (json != null && StringUtils.isNotBlank(json)) {
