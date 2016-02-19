@@ -28,6 +28,8 @@ openlrs:
   tierTwoStorage: InMemoryStorage
   # options - PropertiesFileKeyManager,DatabaseKeyManager
   keyManager: PropertiesFileKeyManager
+  reader: AwsElasticsearchReader
+  writer: AwsKinesisWriter
 
 #spring:
   # Redis
@@ -56,12 +58,12 @@ openlrs:
 # AWS
 aws:
   # AWS Elasticsearch service
-  #es:
-    #connectionUrl: https://search-something.us-east-1.es.amazonaws.com/
+  es:
+    connectionUrl: https://search-openlr0127-4i6fhwcfysy5ps2aazokfpdi4i.us-east-1.es.amazonaws.com/
   # AWS Kinesis
-  #kinesis:
-    #endpoint: kinesis.us-east-1.amazonaws.com
-    #stream: something
+  kinesis:
+    endpoint: kinesis.us-east-1.amazonaws.com
+    stream: lrs
     
 
   

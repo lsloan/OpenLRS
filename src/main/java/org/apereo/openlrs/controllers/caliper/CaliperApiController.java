@@ -4,9 +4,12 @@
 package org.apereo.openlrs.controllers.caliper;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apereo.openlrs.exceptions.caliper.InvalidCaliperFormatException;
+import org.apereo.openlrs.model.event.v2.Event;
 import org.apereo.openlrs.model.event.v2.EventEnvelope;
+import org.apereo.openlrs.storage.v2.Writer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +25,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/caliper")
 public class CaliperApiController {
   
   @Autowired private ObjectMapper objectMapper;
+  @Autowired private Writer writer;
   
-  @RequestMapping(value = {"/caliper"}, method = RequestMethod.POST,
+  @RequestMapping(value = { "", "/" },
+      method = RequestMethod.POST,
       consumes = "application/json", produces = "application/json;charset=utf-8")
   public void postHandler(@RequestBody String json)
         throws JsonProcessingException, IOException, InvalidCaliperFormatException {
@@ -35,7 +40,16 @@ public class CaliperApiController {
       EventEnvelope ee = objectMapper.readValue(json,
           new TypeReference<EventEnvelope>() {});
       
-      System.out.println(ee);
+      if (ee != null) {
+        List<Event> events = ee.getData();
+        if (events != null && !events.isEmpty()) {
+          for (Event e : events) {
+            e.setTenantId("openlrs");
+            writer.save(e);
+          }
+        }
+      }
+      
     } 
     catch (Exception e) {
       e.printStackTrace();
