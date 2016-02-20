@@ -26,7 +26,7 @@ import com.amazonaws.services.kinesis.AmazonKinesisClient;
  * @author ggilbert
  *
  */
-@ConditionalOnProperty(name="openlrs.tierOneStorage", havingValue="AwsKinesisTierOneStorage")
+@ConditionalOnProperty(name="openlrs.writer", havingValue="AwsKinesisWriter")
 @Configuration
 public class AwsKinesisConfig {
 
