@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author ggilbert
+ * @author scody
  *
  */
 @ConditionalOnProperty(name="openlrs.keyManager", havingValue="DatabaseKeyManager")
