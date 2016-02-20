@@ -15,7 +15,8 @@ import lti.LaunchRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.apereo.openlrs.KeyManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -29,10 +30,9 @@ public class OAuthFilter extends OncePerRequestFilter {
 	
 	private Logger log = Logger.getLogger(OAuthFilter.class);
 	
-	@Value("${auth.oauth.key}")
-	private String key;
-	@Value("${auth.oauth.secret}")
-	private String secret;
+	
+	@Autowired
+	private KeyManager keyManager;
 
 
 	@Override
@@ -45,6 +45,11 @@ public class OAuthFilter extends OncePerRequestFilter {
 		String signature = alphaSortedMap.remove(OAuthUtil.SIGNATURE_PARAM);
 
         String calculatedSignature = null;
+        
+        //TODO: OAuth in the case of LTI
+        String key = req.getParameter("oauth_consumer_key");        
+        String secret = keyManager.getSecretForKey(key);
+        
 		try {
 			calculatedSignature = new OAuthMessageSigner().sign(secret,
 											OAuthUtil.mapToJava(alphaSortedMap.get(OAuthUtil.SIGNATURE_METHOD_PARAM)),

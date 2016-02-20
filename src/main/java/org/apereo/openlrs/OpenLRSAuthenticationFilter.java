@@ -87,11 +87,11 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 		if (oauth_parameters != null && oauth_parameters.containsKey("oauth_consumer_key")) {
 			final String oauth_consumer_key = oauth_parameters.get("oauth_consumer_key");
 			
-			// TODO
-			// replace with multi-tenant support & protocol based retry logic
 			if (oauth_consumer_key != null) {
 			  
-			  String secret = keyManager.getSecretForKey(oauth_consumer_key);
+			    String secret = keyManager.getSecretForKey(oauth_consumer_key);
+			    Tenant tenant = keyManager.getTenantForKey(oauth_consumer_key);
+			  
 				
 				TreeMap<String, String> normalizedParams = new TreeMap<String, String>(oauth_parameters);
 				Map<String, String []> params = request.getParameterMap();
@@ -110,7 +110,9 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 				final String calculatedSignature = OAuthUtils.sign(secret, normalizedParams, 
 						OAuthUtils.mapToJava(oauth_parameters.get("oauth_signature_method")), request.getMethod(), request.getRequestURL().toString());
 				
-				if (signature.equals(calculatedSignature)) {
+				if (signature.equals(calculatedSignature)) {	
+					request.setAttribute("tenant", tenant);
+					//response.setHeader("institution", tenant.getName());
 					filterChain.doFilter(request, response);
 				}
 				else {
@@ -126,6 +128,8 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 			unauthorized(response, "Invalid authentication token", "OAuth");
 		}
 	}
+	
+	
 	
 	private void authenticateBasic(String authorizationHeader, HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -146,11 +150,13 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 	        			String _password = credentials.substring(colon + 1).trim();
 	        			
 	        			String password = keyManager.getSecretForKey(_username);
-	 
+	        			Tenant tenant = keyManager.getTenantForKey(_password);
+	        			
 	        			if (!password.equals(_password)) {
 	        				unauthorized(response, "Bad credentials", "Basic");
 	        			}
 	        			else {
+	        				request.setAttribute("tenant", tenant);
 	        				filterChain.doFilter(request, response);
 	        			}
 	        		} 
