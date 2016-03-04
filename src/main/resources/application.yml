@@ -28,8 +28,10 @@ openlrs:
   tierTwoStorage: InMemoryStorage
   # options - PropertiesFileKeyManager,DatabaseKeyManager
   keyManager: PropertiesFileKeyManager
-  #reader: AwsElasticsearchReader
-  #writer: AwsKinesisWriter
+  # reader options: InMemoryReaderWriter, AwsElasticsearchReader
+  reader: InMemoryReaderWriter
+  # writer options: InMemoryReaderWriter, AwsKinesisWriter
+  writer: InMemoryReaderWriter
 
 spring:
   # Redis

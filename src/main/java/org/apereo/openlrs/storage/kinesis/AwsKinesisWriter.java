@@ -49,18 +49,16 @@ public class AwsKinesisWriter implements Writer {
   @Value("${aws.kinesis.stream}") 
   private String stream;
 
-  private String partitionKey = "TENANT_ID";
-  
   @Override
-  public Event save(Event event) {
-    if (event == null || event.getTenantId() == null) {
+  public Event save(Event event, String tenantId) {
+    if (event == null || tenantId == null) {
       log.error(event.toString());
       throw new IllegalArgumentException("Event or Tenant cannot be null");
     }
     
     PutRecordRequest putRecordRequest = new PutRecordRequest();
     putRecordRequest.setStreamName(stream);
-    putRecordRequest.setPartitionKey(partitionKey);
+    putRecordRequest.setPartitionKey(tenantId);
     putRecordRequest.setData(ByteBuffer.wrap(event.toJSON().getBytes()));
     PutRecordResult result = kinesisClient.putRecord(putRecordRequest);
     
@@ -71,13 +69,13 @@ public class AwsKinesisWriter implements Writer {
   }
 
   @Override
-  public List<Event> saveAll(Collection<Event> events) {
+  public List<Event> saveAll(Collection<Event> events, String tenantId) {
     List<Event> savedEvents = null;
     
     if (events != null && !events.isEmpty()) {
       savedEvents = new ArrayList<Event>(events.size());
       for (Event e : events) {
-        savedEvents.add(this.save(e));
+        savedEvents.add(this.save(e, tenantId));
       }
     }
     

@@ -85,6 +85,7 @@ public class Application {
 		List<String> urls = new ArrayList<String>(1);
 		urls.add("/xAPI/*");
 		urls.add("/caliper/*");
+    urls.add("/v1/*");
 		registrationBean.setUrlPatterns(urls);
 		registrationBean.setOrder(1);
 		return registrationBean;
@@ -98,6 +99,7 @@ public class Application {
 		urls.add("/xAPI/statements");
 		urls.add("/xAPI/statements/*");
 		urls.add("/api/*");
+		urls.add("/v1/*");
 		registrationBean.setUrlPatterns(urls);
 		registrationBean.setOrder(2);
 		return registrationBean;
@@ -109,6 +111,7 @@ public class Application {
 		registrationBean.setFilter(xapiRequestValidationFilter);
 		List<String> urls = new ArrayList<String>(1);
 		urls.add("/xAPI/*");
+		urls.add("/v1/xAPI/*");
 		registrationBean.setUrlPatterns(urls);
 		registrationBean.setOrder(3);
 		return registrationBean;

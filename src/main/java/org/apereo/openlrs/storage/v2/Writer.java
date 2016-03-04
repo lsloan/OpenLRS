@@ -13,6 +13,6 @@ import org.apereo.openlrs.model.event.v2.Event;
  *
  */
 public interface Writer {
-  Event save(Event event);
-  List<Event> saveAll(Collection<Event> events);
+  Event save(Event event, String tenantId);
+  List<Event> saveAll(Collection<Event> events, String tenantId);
 }

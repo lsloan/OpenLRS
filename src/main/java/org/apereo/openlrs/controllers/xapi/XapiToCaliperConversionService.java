@@ -188,7 +188,7 @@ public class XapiToCaliperConversionService {
 
   }
 
-  public Event fromXapi(Statement statement, String tenantId) {
+  public Event fromXapi(Statement statement) {
     
     // EVENT TIME
     DateTime eventTime = null;    
@@ -436,8 +436,7 @@ public class XapiToCaliperConversionService {
         caliperObject, 
         null, // TODO map Target
         caliperGroup, 
-        null, // TODO map Generated
-        tenantId);
+        null); // TODO map Generated
   }
   
   private String xApiVerbToCaliperAction(String xapiVerbId) {
