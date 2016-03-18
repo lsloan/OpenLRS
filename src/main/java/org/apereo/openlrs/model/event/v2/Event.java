@@ -49,7 +49,6 @@ public class Event implements Serializable {
   private Target target;
   private Generated generated;
   private Group group;
-  private String tenantId;
 
   @JsonCreator
   public Event(@JsonProperty("@context") String context, 
@@ -60,8 +59,7 @@ public class Event implements Serializable {
       @JsonProperty("object") Object object, 
       @JsonProperty("target") Target target, 
       @JsonProperty("group") Group group,
-      @JsonProperty("generated") Generated generated,
-      @JsonProperty("tenantId") String tenantId) {
+      @JsonProperty("generated") Generated generated) {
     super();
     this.context = context;
     this.type = type;
@@ -72,7 +70,14 @@ public class Event implements Serializable {
     this.target = target;
     this.generated = generated;
     this.group = group;
-    this.tenantId = tenantId;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getContext() {
@@ -111,18 +116,10 @@ public class Event implements Serializable {
     return group;
   }
 
-  public String getTenantId() {
-    return tenantId;
-  }
-
-  public void setTenantId(String tenantId) {
-    this.tenantId = tenantId;
-  }
-
   @Override
   public String toString() {
     return "Event [context=" + context + ", type=" + type + ", eventTime=" + eventTime + ", actor=" + actor + ", action=" + action + ", object="
-        + object + ", target=" + target + ", generated=" + generated + ", group=" + group + ", tenantId=" + tenantId + "]";
+        + object + ", target=" + target + ", generated=" + generated + ", group=" + group  + "]";
   }
 
   @JsonIgnore
