@@ -4,13 +4,14 @@
 
     <groupId>org.apereo</groupId>
     <artifactId>openlrs</artifactId>
+    <description>A secure, standards-based, open source Learning Record Store</description>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
 	    <groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-parent</artifactId>
-    	<version>1.2.0.M2</version>
+    	<version>1.2.6.RELEASE</version>
 	</parent>
 
     <name>Apereo OpenLRS Project</name>
@@ -20,6 +21,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    
+ 	<dependencyManagement>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-starter-parent</artifactId>
+	            <version>Angel.SR4</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	    </dependencies>
+	</dependencyManagement>
 
     <dependencies>
         <!-- Spring Boot -->
@@ -36,6 +49,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+		<dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-config</artifactId>
+    	</dependency>		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -52,6 +69,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>0.1.7</version>
+        </dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.datatype</groupId>
+		  <artifactId>jackson-datatype-joda</artifactId>
+		</dependency>  
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
        <!-- Apache commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -75,12 +109,39 @@
 		    <version>0.8.1</version>
     		<scope>test</scope>
 		</dependency>
+		
+		<!-- IMS Libraries -->
+		<!-- https://github.com/IMSGlobal/caliper-java-public -->
+        <dependency>
+            <groupId>org.imsglobal.caliper</groupId>
+            <artifactId>caliper-java</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.10.32</version>
+		</dependency>
+		
+    	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
     </dependencies>
     <build>
 	    <plugins>
 	        <plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
+	            <configuration>
+	            	<addResources>false</addResources>
+	            </configuration>
 	        </plugin>
 	    </plugins>
 	</build>

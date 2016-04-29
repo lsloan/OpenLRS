@@ -16,7 +16,8 @@
 package org.apereo.openlrs.controllers;
 
 import org.apereo.openlrs.Application;
-import org.apereo.openlrs.model.About;
+import org.apereo.openlrs.controllers.xapi.AboutController;
+import org.apereo.openlrs.model.xapi.About;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author ggilbert
  *
  */
-@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
 public class AboutControllerTest {
@@ -39,6 +39,6 @@ public class AboutControllerTest {
 	@Test
 	public void versionShouldBe() {
 		About about = aboutController.about();
-		Assert.assertEquals("someversion", about.getVersion());
+		Assert.assertEquals("1.0.1", about.getVersion());
 	}
 }

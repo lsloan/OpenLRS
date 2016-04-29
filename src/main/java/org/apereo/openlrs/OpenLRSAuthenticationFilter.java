@@ -30,6 +30,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apereo.openlrs.utils.OAuthUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -45,16 +46,7 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 	
 	@Value("${auth.enabled}")
 	private boolean enabled;
-	
-	@Value("${auth.basic.username}")
-	private String username;
-	@Value("${auth.basic.password}")
-	private String password;
-	
-	@Value("${auth.oauth.key}")
-	private String key;
-	@Value("${auth.oauth.secret}")
-	private String secret;
+	@Autowired KeyManager keyManager;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
@@ -95,9 +87,11 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 		if (oauth_parameters != null && oauth_parameters.containsKey("oauth_consumer_key")) {
 			final String oauth_consumer_key = oauth_parameters.get("oauth_consumer_key");
 			
-			// TODO
-			// replace with multi-tenant support & protocol based retry logic
-			if (oauth_consumer_key != null && oauth_consumer_key.equals(key)) {
+			if (oauth_consumer_key != null) {
+			  
+			    String secret = keyManager.getSecretForKey(oauth_consumer_key);
+			    Tenant tenant = keyManager.getTenantForKey(oauth_consumer_key);
+			  
 				
 				TreeMap<String, String> normalizedParams = new TreeMap<String, String>(oauth_parameters);
 				Map<String, String []> params = request.getParameterMap();
@@ -116,7 +110,9 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 				final String calculatedSignature = OAuthUtils.sign(secret, normalizedParams, 
 						OAuthUtils.mapToJava(oauth_parameters.get("oauth_signature_method")), request.getMethod(), request.getRequestURL().toString());
 				
-				if (signature.equals(calculatedSignature)) {
+				if (signature.equals(calculatedSignature)) {	
+					request.setAttribute("tenant", tenant);
+					//response.setHeader("institution", tenant.getName());
 					filterChain.doFilter(request, response);
 				}
 				else {
@@ -132,6 +128,8 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 			unauthorized(response, "Invalid authentication token", "OAuth");
 		}
 	}
+	
+	
 	
 	private void authenticateBasic(String authorizationHeader, HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -150,11 +148,15 @@ public class OpenLRSAuthenticationFilter extends OncePerRequestFilter {
 	        		if (colon != -1) {
 	        			String _username = credentials.substring(0, colon).trim();
 	        			String _password = credentials.substring(colon + 1).trim();
-	 
-	        			if (!username.equals(_username) || !password.equals(_password)) {
+	        			
+	        			String password = keyManager.getSecretForKey(_username);
+	        			Tenant tenant = keyManager.getTenantForKey(_password);
+	        			
+	        			if (!password.equals(_password)) {
 	        				unauthorized(response, "Bad credentials", "Basic");
 	        			}
 	        			else {
+	        				request.setAttribute("tenant", tenant);
 	        				filterChain.doFilter(request, response);
 	        			}
 	        		} 

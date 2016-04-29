@@ -1,0 +1,74 @@
+# Spring Actuator
+# See https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html
+# Disable by default all but info
+
+endpoints:
+  enabled: false
+  env:
+    enabled: false
+  pause:
+    enabled: false
+  resume:
+    enabled: false
+  info:
+    enabled: true
+    
+info:
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    description: ${project.description}
+    version: ${project.version}
+    
+openlrs:
+  # options - InMemoryStorage, RedisPubSubTierOneStorage, AwsKinesisTierOneStorage
+  tierOneStorage: InMemoryStorage
+  # options - InMemoryStorage, NoOpTierTwoStorage, NormalizedElasticsearchTierTwoStorage, 
+  # NormalizedMongoTierTwoStorage, XApiOnlyElasticsearchTierTwoStorage, XApiOnlyAwsElasticsearchTierTwoStorage, NormalizedAwsElasticsearchTierTwoStorage
+  tierTwoStorage: InMemoryStorage
+  # options - PropertiesFileKeyManager,DatabaseKeyManager
+  keyManager: PropertiesFileKeyManager
+  # reader options: InMemoryReaderWriter, AwsElasticsearchReader
+  reader: InMemoryReaderWriter
+  # writer options: InMemoryReaderWriter, AwsKinesisWriter
+  writer: InMemoryReaderWriter
+
+spring:
+  # Redis
+  # uncomment this line if you are using password protected redis
+  #redis:
+    #password: somepassword
+    # uncomment these lines if you are using redis sentinel for HA
+    #sentinel:
+      #master: openlrsmaster
+      #nodes: 127.0.0.1:26379,127.0.0.1:26380,127.0.0.1:26381
+  # For Elasticsearch or Mongo
+  #data:
+    #elasticsearch:
+      #cluster-nodes: localhost:9300
+  # For DatabaseKeyManager
+  #datasource:
+    #url: jdbc:mysql://localhost:3306/openlrs
+    #username: root
+    #password: root
+    #driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  
+  
+# AWS
+#aws:
+  # AWS Elasticsearch service
+  #es:
+    #connectionUrl: 
+  # AWS Kinesis
+  #kinesis:
+    #endpoint: kinesis.us-east-1.amazonaws.com
+    #stream: lrs
+    
+    
+hbm2ddl:
+  auto: create 
+
+  
