@@ -147,6 +147,10 @@
 		</plugins>
 	</build>
 	<repositories>
+    <repository>
+      <id>repo</id>
+      <url>file:${basedir}/repo</url>
+    </repository>
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -154,10 +158,6 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository>
-		<repository>
-			<id>repo</id>
-			<url>file:${basedir}/repo</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
