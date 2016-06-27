@@ -18,9 +18,12 @@ package org.apereo.openlrs.storage.redis;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchAutoConfiguration;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -33,7 +36,10 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
  */
 @ConditionalOnProperty(name="openlrs.tierOneStorage", havingValue="RedisPubSubTierOneStorage")
 @Configuration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {ElasticsearchAutoConfiguration.class,
+    ElasticsearchDataAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class,
+    DataSourceAutoConfiguration.class})
 public class RedisPubSubConfig {
 	
 	@Value("${instance.name}")

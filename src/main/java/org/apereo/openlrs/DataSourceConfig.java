@@ -17,6 +17,10 @@ package org.apereo.openlrs;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchAutoConfiguration;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,7 +31,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @ConditionalOnProperty("spring.datasource.url")
 @Configuration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {ElasticsearchAutoConfiguration.class,
+    ElasticsearchDataAutoConfiguration.class})
 @EnableJpaRepositories(basePackages = {"org.apereo.openlrs"})
 @EntityScan(basePackages = {"org.apereo.openlrs"})
 public class DataSourceConfig {
